@@ -31,22 +31,28 @@ Widget defaultButton ({
 Widget defaultTextFormFeild({
   required TextInputType type ,
   required TextEditingController editingController ,
-  String? label ,
+  required String label ,
   IconData? prefxIcon,
   IconData? suffxIcon ,
+  String? Function(String? value)? validate,
+  VoidCallback? suffxFunc ,
   bool password = false ,
 }) => TextFormField(
   keyboardType: type,
   obscureText: password,
   controller: editingController,
+  validator: validate,
   decoration: InputDecoration(
       prefixIcon: Icon(
           prefxIcon
       ) ,
-      suffixIcon: Icon(
-          suffxIcon
-      ),
-      label: Text(label ?? ''),
+      suffixIcon: suffxIcon != null ?  IconButton(
+        onPressed: suffxFunc,
+        icon: Icon(
+            suffxIcon
+        ),
+      ) : null,
+      label: Text(label == null ? '' : label),
       border: OutlineInputBorder()
   ),
 ) ;
